@@ -8,6 +8,12 @@ const port = 3000;
 // Invoco il router degli eventi
 const eventsRouter = require("./router/events");
 
+// application/json
+app.use(express.json());
+
+// application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 // Definisco le rotte
 app.use('/events', eventsRouter);
 
