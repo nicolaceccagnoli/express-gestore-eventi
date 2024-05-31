@@ -10,6 +10,9 @@ const eventsController = require('../controllers/events');
 // Rotta per l'index
 router.get('/', eventsController.index);
 
+// Rotta per l'index delle prenotazioni
+router.get('/:eventId/reservations', eventsController.indexReservation);
+
 // Rotta per lo store
 router.post('/', eventsController.store);
 

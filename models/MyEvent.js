@@ -4,9 +4,6 @@ const fs = require("fs");
 // Importo path
 const path = require("path");
 
-// Recupero le prenotazioni
-const Reservation = require('./Reservation');
-
 // Definisco un istanza di Event
 class MyEvent {
     #id;

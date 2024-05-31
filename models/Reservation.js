@@ -15,6 +15,9 @@ class Reservation {
     }
 
     set id(id) {
+        if (!id) {
+            throw new Error('ID is required')
+        }
         this.#id = id;
     }
 
@@ -23,6 +26,10 @@ class Reservation {
     }
 
     set firstName(firstName) {
+        if (!firstName) {
+            throw new Error('First name is required')
+        }
+
         this.#firstName = firstName;
     }
 
@@ -31,6 +38,10 @@ class Reservation {
     }
 
     set lastName(lastName) {
+        if (!lastName) {
+            throw new Error('Last name is required')
+        }
+
         this.#lastName = lastName;
     }
 
@@ -39,6 +50,10 @@ class Reservation {
     }
 
     set email(email) {
+        if (!email) {
+            throw new Error('Email is required')
+        }
+
         this.#email = email;
     }
 
@@ -47,6 +62,10 @@ class Reservation {
     }
 
     set eventId(eventId) {
+        if (!eventId) {
+            throw new Error('Event ID is required')
+        }
+
         this.#eventId = eventId;
     }
 

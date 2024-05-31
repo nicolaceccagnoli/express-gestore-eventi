@@ -1,6 +1,9 @@
 // Recupero gli eventi dal db
 const events = require('../db/events.json')
 
+// Recupero le prenotazioni
+const reservations = require('../db/reservations.json');
+
 // Recupero il model del singolo evento
 const MyEvent = require("../models/MyEvent.js");
 
@@ -93,8 +96,21 @@ const update = (req, res) => {
     }
 }
 
+// Definisco una rotta index per le prenotazioni
+const indexReservation = (req, res) => {
+    // Mi assicuro che l'id dell'evento sia un numero intero
+    const eventId  = parseInt(req.params.eventId); 
+
+    const eventReservation = MyEvent.getReservations(eventId);
+
+    res.json({
+        date: eventReservation
+    })
+}
+
 module.exports = {
     index,
     store,
-    update
-}
+    update,
+    indexReservation
+    }
