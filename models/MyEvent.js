@@ -89,8 +89,16 @@ class MyEvent {
         // Recupero gli eventi
         const events = MyEvent.readJson(file);
 
-        // Trovo l'evento da aggiornare
-        const event = events.findIndex(e => e.id === id)
+        // Trovo l'indice dell'evento da aggiornare
+        const eventIndex = events.findIndex(e => e.id === parseInt(id))
+
+        // Se l'evento non viene trovato, lancio un errore
+        if (eventIndex === -1) {
+            throw new Error(`Evento con ID ${id} non trovato`);
+        }
+
+        // Recupero l'evento da aggiornare
+        const event = events[eventIndex];
 
         if(updates.title) {
             event.title = updates.title;

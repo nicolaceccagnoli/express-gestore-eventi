@@ -74,14 +74,14 @@ const update = (req, res) => {
     const { title, description, date, maxSeats } = req.body;
 
     // Se il body della request non soddisfa questi requisiti
-    if ( !title || title.trim().replaceAll('/', '').length == 0 || !description || !date || !maxSeats) {
+    if ( !id ) {
         // Restituisco un errore
         return res.status(400).send('Alcuni dati non sono stati inseriti');
     }
 
     try {
         // Aggiorno l'evento
-        const updatedEvent = MyEvent.updateEvents('events', id, { id, title, description, date, maxSeats });
+        const updatedEvent = MyEvent.updateEvents('events', id, { title, description, date, maxSeats });
 
         res.json({
             data: updatedEvent

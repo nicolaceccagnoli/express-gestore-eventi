@@ -3,12 +3,6 @@ const express = require("express");
 // Importo il router
 const router = express.Router();
 
-// Importo il middleware per le rotte non trovate
-const routesNotFound = require('../middleware/routesNotFound');
-
-// Importo il middleware per la gestione degli errori
-const errorsFormatter = require('../middleware/errorsFormatter');
-
 
 // Importo il controller
 const eventsController = require('../controllers/events');
@@ -17,9 +11,9 @@ const eventsController = require('../controllers/events');
 router.get('/', eventsController.index);
 
 // Rotta per lo store
-router.post('/', errorsFormatter, eventsController.store);
+router.post('/', eventsController.store);
 
 // Rotta per l'update
-router.put('/:events', errorsFormatter, eventsController.update);
+router.put('/:id', eventsController.update);
 
 module.exports = router;
