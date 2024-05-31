@@ -1,11 +1,11 @@
-// Recupero il db degli eventi
-const events = require('../db/events.json');
-
 // Importo File System 
 const fs = require("fs");
 
 // Importo path
 const path = require("path");
+
+// Recupero le prenotazioni
+const Reservation = require('./Reservation');
 
 // Definisco un istanza di Event
 class MyEvent {
@@ -119,6 +119,14 @@ class MyEvent {
         MyEvent.putJsonData(file, events);
 
         return event;
+    }
+
+    // Definisco un metodo per recuperare tutte le prenotazioni associate
+    static getReservations(eventId) {
+
+        const reservations = MyEvent.readJson('reservations');
+        return reservations.filter(r => r.eventId === eventId);
+
     }
 
     // Definico i setter e i getter
