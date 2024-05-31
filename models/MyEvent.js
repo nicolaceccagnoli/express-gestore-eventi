@@ -73,7 +73,7 @@ class MyEvent {
 
         // Cerco l'evento per titolo
         if(filters.title) {
-            filteredEvents = filteredEvents.filter(e => e.title.toLowerCase().includes(filters.title.toLowerCase()));
+            filteredEvents = filteredEvents.filter(e => e.title?.toLowerCase().includes(filters.title.toLowerCase()));
         }
 
         // Cerco l'evento per data
@@ -82,6 +82,35 @@ class MyEvent {
         }
 
         return filteredEvents;
+    }
+
+    static updateEvents(file, id, updates) {
+
+        // Recupero gli eventi
+        const events = MyEvent.readJson(file);
+
+        // Trovo l'evento da aggiornare
+        const event = events.findIndex(e => e.id === id)
+
+        if(updates.title) {
+            event.title = updates.title;
+        }
+
+        if(updates.description) {
+            event.description = updates.description;
+        }
+
+        if(updates.date) {
+            event.date = updates.date;
+        }
+
+        if(updates.maxSeats) {
+            event.maxSeats = updates.maxSeats;
+        }
+
+        MyEvent.putJsonData(file, events);
+
+        return event;
     }
 
     // Definico i setter e i getter

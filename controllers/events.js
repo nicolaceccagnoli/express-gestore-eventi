@@ -36,7 +36,7 @@ const store = (req, res) => {
     // Se il body della request non soddisfa questi requisiti
     if (!title || title.trim().replaceAll('/', '').length == 0 || !description || !date || !maxSeats) {
         // Restituisco un errore
-        res.status(400).send('Alcuni dati non sono stati inseriti');
+        return res.status(400).send('Alcuni dati non sono stati inseriti');
     }
 
     // Leggo gli eventi esistenti
@@ -44,8 +44,6 @@ const store = (req, res) => {
 
     // Creo un nuovo evento
     const newEvent = new MyEvent(currentEvents.length +1, title, description, date, maxSeats);
-
-    console.log(newEvent);
 
     // Aggiungo il nuovo evento alla lista
     currentEvents.push(newEvent);
@@ -68,9 +66,31 @@ const store = (req, res) => {
 
 // Definisco la rotta per l'update
 const update = (req, res) => {
-    res.json({
-        data: 'Evento aggiornato'
-    })
+
+    // Recupero l'evento tramite id
+    const { id } = req.params;
+
+    // Recupero i dati inviati dal client
+    const { title, description, date, maxSeats } = req.body;
+
+    // Se il body della request non soddisfa questi requisiti
+    if ( !title || title.trim().replaceAll('/', '').length == 0 || !description || !date || !maxSeats) {
+        // Restituisco un errore
+        return res.status(400).send('Alcuni dati non sono stati inseriti');
+    }
+
+    try {
+        // Aggiorno l'evento
+        const updatedEvent = MyEvent.updateEvents('events', id, { id, title, description, date, maxSeats });
+
+        res.json({
+            data: updatedEvent
+        })
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
 }
 
 module.exports = {

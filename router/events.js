@@ -14,7 +14,7 @@ const errorsFormatter = require('../middleware/errorsFormatter');
 const eventsController = require('../controllers/events');
 
 // Rotta per l'index
-router.get('/', routesNotFound, eventsController.index);
+router.get('/', eventsController.index);
 
 // Rotta per lo store
 router.post('/', errorsFormatter, eventsController.store);
