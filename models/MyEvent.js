@@ -54,6 +54,35 @@ class MyEvent {
         };
     }
 
+    // Definisco un metodo per recuperare un evento tramite ID
+    static filterEvents(file, filters) {
+        // Recupero il percorso del file
+        const filePath = path.join(__dirname, '..', 'db', `${file}.json`)
+        // Leggo il contenuto del file
+        const fileData = fs.readFileSync(filePath, 'utf-8');
+        // Converto la stringa JSON in un array di oggetti JS
+        const events = JSON.parse(fileData);
+
+        // Applico i filtri agli eventi
+        let filteredEvents = events;
+
+        // Cerco l'evento con l'ID fornito
+        if(filters.id) {
+            filteredEvents = filteredEvents.filter(e => e.id === filters.id);
+        }
+
+        // Cerco l'evento per titolo
+        if(filters.title) {
+            filteredEvents = filteredEvents.filter(e => e.title.toLowerCase().includes(filters.title.toLowerCase()));
+        }
+
+        // Cerco l'evento per data
+        if(filters.date) {
+            filteredEvents = filteredEvents.filter(e => e.date === filters.date);
+        }
+
+        return filteredEvents;
+    }
 
     // Definico i setter e i getter
     set id(id) {

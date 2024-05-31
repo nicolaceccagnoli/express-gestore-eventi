@@ -7,8 +7,23 @@ const MyEvent = require("../models/MyEvent.js");
 // Definisco la rotta per l'index
 const index = (req, res) => {
 
+    const { id, title, date } = req.query;
+
+    // Se non sono stati inseriti dei parametri nella query
+    if(!id && !title && !date) {
+        const allEvents = MyEvent.readJson('events');
+        // Restituisco tutti gli eventi
+        return res.json({
+            data: allEvents
+        })
+    }
+    
+    // Filtro gli eventi
+    const filteredEvents = MyEvent.filterEvents('events', {id, title, date});
+
+    // Restituisco gli eventi filtrati
     res.json({
-        data: 'Scopri tutti gli eventi'
+        data: filteredEvents
     })
 
 }
