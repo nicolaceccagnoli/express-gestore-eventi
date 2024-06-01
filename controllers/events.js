@@ -7,6 +7,9 @@ const reservations = require('../db/reservations.json');
 // Recupero il model del singolo evento
 const MyEvent = require("../models/MyEvent.js");
 
+// Recupero il model delle prenotazioni
+const Reservation = require('../models/Reservation.js');
+
 // Definisco la rotta per l'index
 const index = (req, res) => {
 
@@ -56,9 +59,9 @@ const store = (req, res) => {
 
     if(newEvent) {
         // Qui viene chiamata toJSON della classe MyEvent
-        res.json({
-            ...newEvent
-        })
+        res.json(
+            newEvent.toJSON()
+        )
     } else {
         res.status(400).json({
             message: 'Qualcosa è andato storto',
@@ -108,9 +111,59 @@ const indexReservation = (req, res) => {
     })
 }
 
+// Definisco una rotta per aggiungere le prenotazioni
+const addReservation = (req, res) => {
+
+    const { eventId } = req.params;
+
+    const { firstName, lastName, email} = req.body;
+
+    // Se mi sono dimenticato alcuni dati o non li ho inseriti correttamente
+    if (!firstName 
+        || 
+        firstName.trim().replaceAll('/', '').length == 0 
+        || 
+        !lastName
+        ||
+        lastName.trim().replaceAll('/', '').length == 0
+        || 
+        !email 
+        ||
+        email.trim().replaceAll('/', '').length == 0
+        ||
+        !eventId
+        ||
+        !parseInt(eventId)
+    ) {
+        // Restituisco un errore
+        return res.status(400).send('Alcuni dati non sono corretti o sono mancanti');
+    }
+
+    // Leggo le prenotazioni esistenti
+    const eventReservation = MyEvent.readJson('reservations');
+
+    // Creo una nuova prenotazione
+    const newReservation = new Reservation(eventReservation.length + 1, firstName, lastName, email, eventId);
+
+    eventReservation.push(newReservation);
+
+    MyEvent.putJsonData('reservations', eventReservation);
+
+    if(newReservation) {
+        res.json(
+            newReservation.toJSON()
+        )
+    } else {
+        res.status(400).json({
+            message: 'Qualcosa è andato storto'
+        })
+    }
+}
+
 module.exports = {
     index,
     store,
     update,
-    indexReservation
+    indexReservation,
+    addReservation
     }

@@ -14,6 +14,16 @@ class Reservation {
         this.#eventId = eventId;
     }
 
+    toJSON() {
+        return {
+            id : this.#id,
+            firstName : this.#firstName,
+            lastName : this.#lastName,
+            email : this.#email,
+            eventId : this.#eventId
+        }
+    }
+
     set id(id) {
         if (!id) {
             throw new Error('ID is required')
@@ -74,3 +84,5 @@ class Reservation {
     }
 
 }
+
+module.exports = Reservation;

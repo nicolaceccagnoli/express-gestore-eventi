@@ -16,6 +16,9 @@ router.get('/:eventId/reservations', eventsController.indexReservation);
 // Rotta per lo store
 router.post('/', eventsController.store);
 
+// Rotta per lo store delle prenotazioni
+router.post('/:eventId/reservations', eventsController.addReservation)
+
 // Rotta per l'update
 router.put('/:id', eventsController.update);
 
